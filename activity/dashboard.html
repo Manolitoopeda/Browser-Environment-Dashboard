@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Browser Environment Dashboard</title>
+    <style>
+        /* Embedded CSS for Browser Environment Dashboard */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 20px 20px 20px;
+            background-color: black;
+            color: #333;
+        }
+        header {
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            padding: 15px;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            color: black;
+            margin: 0 0 10px 0;
+        }
+        section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        section h2 {
+            margin-top: 0;
+            color: black;
+        }
+        button {
+            margin: 5px 10px 5px 0;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid black;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+        }
+        .info-item {
+            margin: 5px 0;
+        }
+        #pageTitleDisplay {
+            font-weight: bold;
+        }
+    </style>
+
+<!-- Read me -->
+
+</head>
+<body>
+    <header>
+        <h1>Browser Environment Dashboard</h1>
+        <p><strong>Complete Name:</strong> Manolito O. Opeda jr</p>
+        <p><strong>Sex:</strong> Male</p>
+        <p><strong>Address:</strong> Villa Pena, Goa, Camarines Sur</p>
+        <p><strong>Course, Year, and Section:</strong> BSIT, 2, B</p>
+        <p><strong>Name of School:</strong> Partido State University</p>
+        <p><strong>Semester and Academic Year:</strong> 2nd Sem and AY 2024-2025</p>
+        <p><strong>Course Code and Title:</strong> PF2 - Event Driven Programming</p>
+        <p><strong>Name of Subject Instructor:</strong> Prof. Arjay Abio</p>
+    </header>
+
+    <section id="browserInfo">
+        <h2>Part A: Browser Information</h2>
+        <div class="info-item" id="browserNameVersion"></div>
+        <div class="info-item" id="platform"></div>
+        <div class="info-item" id="javaEnabled"></div>
+        <div class="info-item" id="screenResolution"></div>
+        <div class="info-item" id="availableScreenSize"></div>
+        <div class="info-item" id="colorDepth"></div>
+    </section>
+
+    <section id="pageInfoControls">
+        <h2>Part B: Page Information and Controls</h2>
+        <div class="info-item"><strong>Current URL:</strong> <span id="currentURL"></span></div>
+        <div class="info-item"><strong>Hostname:</strong> <span id="hostname"></span></div>
+        <div class="info-item"><strong>Page Title:</strong> <span id="pageTitleDisplay"></span></div>
+        <button id="changeTitleBtn">Change Page Title</button>
+    </section>
+
+    <section id="navigationControls">
+        <h2>Part C: Navigation Controls</h2>
+        <button id="reloadBtn">Reload Page</button>
+        <button id="redirectBtn">Redirect to facebook.com</button>
+        <button id="backBtn">Go Back</button>
+        <button id="forwardBtn">Go Forward</button>
+    </section>
+
+    <script>
+        // JavaScript for The Browser Environment Dashboard
+
+        // Part A: Display Of Browser Information
+        function displayBrowserInfo() {
+            const browserNameVersion = navigator.appName + " " + navigator.appVersion;
+            const platform = navigator.platform;
+            const javaEnabled = navigator.javaEnabled() ? "Yes" : "No";
+            const screenResolution = screen.width + " x " + screen.height;
+            const availableScreenSize = screen.availWidth + " x " + screen.availHeight;
+            const colorDepth = screen.colorDepth;
+
+            document.getElementById("browserNameVersion").textContent = "Browser Name and Version: " + browserNameVersion;
+            document.getElementById("platform").textContent = "Platform (OS): " + platform;
+            document.getElementById("javaEnabled").textContent = "Java Enabled: " + javaEnabled;
+            document.getElementById("screenResolution").textContent = "Screen Resolution: " + screenResolution;
+            document.getElementById("availableScreenSize").textContent = "Available Screen Size: " + availableScreenSize;
+            document.getElementById("colorDepth").textContent = "Color Depth: " + colorDepth;
+        }
+
+        // Part B: Display Page for the Information and Controls
+        function displayPageInfo() {
+            document.getElementById("currentURL").textContent = window.location.href;
+            document.getElementById("hostname").textContent = window.location.hostname;
+            document.getElementById("pageTitleDisplay").textContent = document.title;
+        }
+
+        // Change of page title dynamically
+        document.getElementById("changeTitleBtn").addEventListener("click", function() {
+            const newTitle = prompt("Enter a new page title:");
+            if (newTitle !== null && newTitle.trim() !== "") {
+                document.title = newTitle;
+                document.getElementById("pageTitleDisplay").textContent = newTitle;
+            }
+        });
+
+        // Part C: Navigation Controls
+        document.getElementById("reloadBtn").addEventListener("click", function() {
+            location.reload();
+        });
+
+        document.getElementById("redirectBtn").addEventListener("click", function() {
+            location.href = "https://www.facebook.com/";
+        });
+
+        document.getElementById("backBtn").addEventListener("click", function() {
+            history.back();
+        });
+
+        document.getElementById("forwardBtn").addEventListener("click", function() {
+            history.forward();
+        });
+
+        // Part D: Dynamic Styling with Screen Info
+        function updateBackgroundColor() {
+            const width = window.innerWidth;
+            if (width < 600) {
+                document.body.style.backgroundColor = "blue";
+            } else if (width >= 600 && width <= 991) {
+                document.body.style.backgroundColor = "green";
+            } else {
+                document.body.style.backgroundColor = "black";
+            }
+        }
+
+        // Initialize dashboard on page load
+        window.addEventListener("load", function() {
+            displayBrowserInfo();
+            displayPageInfo();
+            updateBackgroundColor();
+        });
+
+        // Update background color on window resize
+        window.addEventListener("resize", updateBackgroundColor);
+    </script>
+</body>
+</html>
