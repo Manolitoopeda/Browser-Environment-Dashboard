@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DOM Traversal Interactive</title>
+  <style>
+    .grandparent {
+      background: #f5e79e;
+      padding: 20px;
+      border: 1px solid black;
+      width: 400px;
+      margin: 0 auto;
+    }
+    .parent {
+      background: #add8e6;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .child {
+      background: #ffdada;
+      margin: 5px;
+      padding: 5px;
+    }
+    .selected {
+      border: 2px solid red;
+    }
+    button {
+      margin: 5px;
+    }
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>Complete Name:</strong> Manolito O. Opeda jr.<br>
+    <strong>Sex:</strong> Male<br>
+    <strong>Address:</strong> Villa Pena, Goa, Camarines Sur<br>
+    <strong>Course, Year, and Section:</strong> BSIT 2B<br>
+    <strong>Name of School:</strong> Partido State University<br>
+    <strong>Semester and Academic Year:</strong> 2nd Semester, AY 2024-2025<br>
+    <strong>Subject Code and Title:</strong> PF2 - Event Driven Programming<br>
+    <strong>Name of Subject Instructor:</strong> Prof. Arjay Abio
+  </header>
+  
+  <h2 style="text-align:center;">DOM Traversal Interactive</h2>
+  <div class="grandparent" id="grandparent">
+    <div class="parent">
+      <div class="child">Child 1</div>
+      <div class="child">Child 2</div>
+    </div>
+    <div class="parent">
+      <div class="child">Child 3</div>
+      <div class="child">Child 4</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="traverseDown()">Traverse Down</button>
+    <button onclick="traverseUp()">Traverse Up</button>
+    <button onclick="traverseNextSibling()">Traverse Next Sibling</button>
+    <button onclick="traversePreviousSibling()">Traverse Previous Sibling</button>
+    <button onclick="addChild()">Add Child</button>
+    <button onclick="deleteCurrent()">Delete Current</button>
+  </div>
+
+  <script>
+    let current = document.querySelector('.grandparent');
+
+    function highlight(element) {
+      document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+      if (element) {
+        element.classList.add('selected');
+        current = element;
+      }
+    }
+
+    function traverseDown() {
+      if (current.firstElementChild) highlight(current.firstElementChild);
+    }
+
+    function traverseUp() {
+      if (current.parentElement) highlight(current.parentElement);
+    }
+
+    function traverseNextSibling() {
+      if (current.nextElementSibling) highlight(current.nextElementSibling);
+    }
+
+    function traversePreviousSibling() {
+      if (current.previousElementSibling) highlight(current.previousElementSibling);
+    }
+
+    function addChild() {
+      const newChild = document.createElement('div');
+      newChild.className = 'child';
+      newChild.textContent = 'New Child';
+      current.appendChild(newChild);
+    }
+
+    function deleteCurrent() {
+      if (current !== document.getElementById('grandparent')) {
+        const next = current.nextElementSibling || current.previousElementSibling || current.parentElement;
+        current.remove();
+        highlight(next);
+      }
+    }
+
+    highlight(current); // initial highlight
+  </script>
+</body>
+</html>
